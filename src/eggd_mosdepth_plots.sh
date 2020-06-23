@@ -6,7 +6,7 @@ main() {
     # temp download directory
     mkdir input && cd input
 
-    # download input files
+    # download input files from file:array
     for i in ${!dist[@]}
     do
         dx download "${dist[$i]}" 
@@ -15,15 +15,12 @@ main() {
     # run plot script
     echo "Generating plots"
     python ~/plot-dist.py ./*dist*
-            
-    if [ $(ls | wc -l) == 2 ]
-    # only 1 input & output file => name output input.dist.html
-    then
-        dist_file=$( ls *dist.txt )
-        mv dist.html "${dist_file/txt/html}"
-        dist_report=$(dx upload "${dist_file/txt/html}" --brief)
+
+    # if prefix given rename with prefix and upload
+    if [[ "$prefix" ]]; then
+        mv dist.html "${prefix}.dist.html"
+        dist_report=$(dx upload ${prefix}.dist.html --brief)
     else
-        # could probably have a nice way to name multi file plots
         dist_report=$(dx upload dist.html --brief)
     fi
 

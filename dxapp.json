@@ -14,6 +14,13 @@
         "*.dist*"
       ],
       "help": ""
+    },
+    {
+      "name": "prefix",
+      "label": "output name prefix",
+      "class": "string",
+      "optional": true,
+      "help": "Prefix for naming output file, if not given the output file will be dist.html"
     }
   ],
   "outputSpec": [
